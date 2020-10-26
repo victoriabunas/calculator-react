@@ -21,10 +21,10 @@ class Calculator extends Component {
 
     addToInput = val => {
         if (this.state.operator !== 'equally') {
-            this.setState({ input: this.state.input + val });
+            this.setState({ input: this.state.input + val })
         } else {
-            this.setState({ input: val });
-            this.state.operator = '';
+            this.setState({ input: val })
+            this.state.operator = ''
         }
     }
 
@@ -33,7 +33,7 @@ class Calculator extends Component {
             if (this.state.input === '') {
                 this.setState({ input: 0 + val })
             } else if (this.state.input.indexOf('.') === -1) {
-                this.setState({ input: this.state.input + val });
+                this.setState({ input: this.state.input + val })
             };
         } catch (error) {
             this.setState({ input: '' })
@@ -47,9 +47,9 @@ class Calculator extends Component {
     }
 
     clearInput = () => {
-        this.setState({ input: '' });
-        this.state.currentNumber = '';
-        this.state.previousNumber = '';
+        this.setState({ input: '' })
+        this.state.currentNumber = ''
+        this.state.previousNumber = ''
     }
 
     deleteSym = () => {
@@ -61,70 +61,69 @@ class Calculator extends Component {
     }
 
     additional = () => {
-        this.state.previousNumber = this.state.input;
-        this.setState({ input: '' });
-        this.state.operator = 'plus';
+        this.state.previousNumber = this.state.input
+        this.setState({ input: '' })
+        this.state.operator = 'plus'
     }
 
     subtract = val => {
         if (this.state.input === '') {
             this.setState({ input: val })
         } else {
-            this.state.previousNumber = this.state.input;
-            this.setState({ input: '' });
-            this.state.operator = 'subtract';
+            this.state.previousNumber = this.state.input
+            this.setState({ input: '' })
+            this.state.operator = 'subtract'
         }
     }
 
     multiply = () => {
-        this.state.previousNumber = this.state.input;
-        this.setState({ input: '' });
-        this.state.operator = 'multiply';
+        this.state.previousNumber = this.state.input
+        this.setState({ input: '' })
+        this.state.operator = 'multiply'
     };
 
     devide = () => {
-        this.state.previousNumber = this.state.input;
-        this.setState({ input: '' });
-        this.state.operator = 'devide';
+        this.state.previousNumber = this.state.input
+        this.setState({ input: '' })
+        this.state.operator = 'devide'
     }
 
     addItem = () => {
-        const newItem = localStorage.getItem('previousNumber') + localStorage.getItem('operator') + localStorage.getItem('currentNumber') + '=' + localStorage.getItem('input');
+        const newItem = localStorage.getItem('previousNumber') + localStorage.getItem('operator') + localStorage.getItem('currentNumber') + '=' + localStorage.getItem('input')
         this.setState({ storage: this.state.storage + newItem + '\r\n' })
     }
 
     equally = () => {
         
-
         if (this.state.operator === 'plus') {
-            this.state.currentNumber = this.state.input;
+            this.state.currentNumber = this.state.input
             this.setState({
                 input: parseFloat(this.state.previousNumber) + parseFloat(this.state.input)
-            });
-            localStorage.setItem('previousNumber', this.state.previousNumber);
-            localStorage.setItem('currentNumber', this.state.currentNumber);
-            localStorage.setItem('input', parseFloat(this.state.previousNumber) + parseFloat(this.state.input));
+            })
+            localStorage.setItem('previousNumber', this.state.previousNumber)
+            localStorage.setItem('currentNumber', this.state.currentNumber)
+            localStorage.setItem('input', parseFloat(this.state.previousNumber) + parseFloat(this.state.input))
             localStorage.setItem('operator', '+')
         } else if (this.state.operator === 'subtract') {
-            this.state.currentNumber = this.state.input;
+            this.state.currentNumber = this.state.input
             this.setState({
                 input: parseFloat(this.state.previousNumber) - parseFloat(this.state.input)
-            });
-            localStorage.setItem('previousNumber', this.state.previousNumber);
-            localStorage.setItem('currentNumber', this.state.currentNumber);
-            localStorage.setItem('input', parseFloat(this.state.previousNumber) - parseFloat(this.state.input));
+            })
+            localStorage.setItem('previousNumber', this.state.previousNumber)
+            localStorage.setItem('currentNumber', this.state.currentNumber)
+            localStorage.setItem('input', parseFloat(this.state.previousNumber) - parseFloat(this.state.input))
             localStorage.setItem('operator', '-')
         } else if (this.state.operator === 'multiply') {
-            this.state.currentNumber = this.state.input;
+            this.state.currentNumber = this.state.input
             this.setState({
                 input: parseFloat(this.state.previousNumber) * parseFloat(this.state.input)
-            });
-            localStorage.setItem('previousNumber', this.state.previousNumber);
-            localStorage.setItem('currentNumber', this.state.currentNumber);
-            localStorage.setItem('input', parseFloat(this.state.previousNumber) * parseFloat(this.state.input));
+            })
+            localStorage.setItem('previousNumber', this.state.previousNumber)
+            localStorage.setItem('currentNumber', this.state.currentNumber)
+            localStorage.setItem('input', parseFloat(this.state.previousNumber) * parseFloat(this.state.input))
             localStorage.setItem('operator', '*')
         } else if (this.state.operator === 'devide') {
-            this.state.currentNumber = this.state.input;
+            this.state.currentNumber = this.state.input
             if(this.state.currentNumber !== '0') {
                 this.setState({
                     input: parseFloat(this.state.previousNumber) / parseFloat(this.state.input)
@@ -147,8 +146,8 @@ class Calculator extends Component {
                 input: this.state.input
             });
         }
-        this.state.operator = 'equally';
-        this.addItem();
+        this.state.operator = 'equally'
+        this.addItem()
     }
 
     render() {

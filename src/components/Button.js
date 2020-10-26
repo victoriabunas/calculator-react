@@ -15,8 +15,8 @@ class Button extends Component {
             >
                 {this.props.children}
             </div>
-        );
-    };
+        )
+    }
 }
 
 export default Button;
