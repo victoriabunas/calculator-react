@@ -5,8 +5,7 @@ class History extends Component {
     
     render() {
         return(
-            <div className='history'
-            onClick={() => this.props.handleClick(this.props.children)}>
+            <div className='history'>
                 {this.props.children}
             </div>
         );

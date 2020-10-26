@@ -16,7 +16,7 @@ class Calculator extends Component {
             currentNumber: '',
             operator: '',
             storage: '',
-        };
+        }
     }
 
     addToInput = val => {
@@ -26,7 +26,7 @@ class Calculator extends Component {
             this.setState({ input: val });
             this.state.operator = '';
         }
-    };
+    }
 
     addDecimal = val => {
         try {
@@ -38,33 +38,33 @@ class Calculator extends Component {
         } catch (error) {
             this.setState({ input: '' })
         }
-    };
+    }
 
     addZeroToInput = val => {
-        if (this.state.input !== '') {
+        if (this.state.input !== '' || this.state.operator !== '') {
             this.setState({ input: this.state.input + val });
-        };
-    };
+        }
+    }
 
     clearInput = () => {
         this.setState({ input: '' });
         this.state.currentNumber = '';
         this.state.previousNumber = '';
-    };
+    }
 
     deleteSym = () => {
         try {
             this.setState({ input: this.state.input.slice(0, -1) })
         } catch (error) {
             this.setState({ input: '' })
-        };
-    };
+        }
+    }
 
     additional = () => {
         this.state.previousNumber = this.state.input;
         this.setState({ input: '' });
         this.state.operator = 'plus';
-    };
+    }
 
     subtract = val => {
         if (this.state.input === '') {
@@ -73,8 +73,8 @@ class Calculator extends Component {
             this.state.previousNumber = this.state.input;
             this.setState({ input: '' });
             this.state.operator = 'subtract';
-        };
-    };
+        }
+    }
 
     multiply = () => {
         this.state.previousNumber = this.state.input;
@@ -86,9 +86,15 @@ class Calculator extends Component {
         this.state.previousNumber = this.state.input;
         this.setState({ input: '' });
         this.state.operator = 'devide';
-    };
+    }
+
+    addItem = () => {
+        const newItem = localStorage.getItem('previousNumber') + localStorage.getItem('operator') + localStorage.getItem('currentNumber') + '=' + localStorage.getItem('input');
+        this.setState({ storage: this.state.storage + newItem + '\r\n' })
+    }
 
     equally = () => {
+        
 
         if (this.state.operator === 'plus') {
             this.state.currentNumber = this.state.input;
@@ -119,24 +125,30 @@ class Calculator extends Component {
             localStorage.setItem('operator', '*')
         } else if (this.state.operator === 'devide') {
             this.state.currentNumber = this.state.input;
-            this.setState({
-                input: parseFloat(this.state.previousNumber) / parseFloat(this.state.input)
-            });
-            localStorage.setItem('previousNumber', this.state.previousNumber);
-            localStorage.setItem('currentNumber', this.state.currentNumber);
-            localStorage.setItem('input', parseFloat(this.state.previousNumber) / parseFloat(this.state.input));
-            localStorage.setItem('operator', '/')
+            if(this.state.currentNumber !== '0') {
+                this.setState({
+                    input: parseFloat(this.state.previousNumber) / parseFloat(this.state.input)
+                })
+                localStorage.setItem('previousNumber', this.state.previousNumber)
+                localStorage.setItem('currentNumber', this.state.currentNumber)
+                localStorage.setItem('input', parseFloat(this.state.previousNumber) / parseFloat(this.state.input))
+                localStorage.setItem('operator', '/')
+            } else {
+                this.setState({
+                    input: 'Error'
+                })
+                localStorage.setItem('previousNumber', this.state.previousNumber)
+                localStorage.setItem('currentNumber', this.state.currentNumber)
+                localStorage.setItem('input', 'Error')
+                localStorage.setItem('operator', '/')
+            }
         } else if (this.state.operator === 'equally') {
             this.setState({
                 input: this.state.input
             });
         }
         this.state.operator = 'equally';
-    }
-
-    addItem = () => {
-        const newItem = localStorage.getItem('previousNumber') + localStorage.getItem('operator') + localStorage.getItem('currentNumber') + '=' + localStorage.getItem('input');
-        this.setState({ storage: this.state.storage + newItem + '\r\n' })
+        this.addItem();
     }
 
     render() {
@@ -165,7 +177,7 @@ class Calculator extends Component {
                     <DeleteButton handleClick={this.deleteSym}>DEL</DeleteButton>
                 </div>
 
-                <History handleClick={this.addItem}>
+                <History>
                     <p className='history-p'>history</p>
                     <p>{this.state.storage}</p>
                 </History>

@@ -6,7 +6,7 @@ class DeleteButton extends Component {
         
         return(
             <div className='delete-button'
-            onClick={() => this.props.handleClick()}
+            onClick={this.props.handleClick}
             >
                 {this.props.children}
             </div>
